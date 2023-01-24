@@ -1,0 +1,90 @@
+1. Tạo menu:
+	- tạo 1 class Notification để tbáo khi thành công hoặc lỗi, sử dụng thêm class Color.
+
+	- ở hàm main xài switch case để chọn 1 or 2 (pubMana or bookMana).
+
+	- trong mỗi case gọi tới 1 hàm void bên dưới để có thể chọn và sd các funcs của case đó.
+
+2. Tạo 1 class Publisher trong package dto:
+	- implement Serializable:
+		+ Serializable có thể chuyển 1 object thành 1 chuỗi byte và chuỗi byte này cx có thể chuyển
+		  ngược lại thành 1 đối tượng (deserialization) để có thể được sd bởi 1 tiến trình (modul) khác.
+
+		+ Khi lập trình với Java, quá trình trao đổi dữ liệu giữa các module khác nhau nhưng đều viết bằng Java, 
+		  dữ liệu sẽ được thể hiện dưới dạng byte chứ không phải là Object. Do đó, chúng ta sẽ cần một cơ chế 
+		  có thể hiểu các Object được nhận hoặc gửi đi. Serializable trong Java chính là cơ chế đảm nhiệm việc chuyển đổi.
+
+		+ Mục đích chính là để chuyển object của mình thành 1 byte stream để có thể lưu xuống file (dat).
+
+	- khai báo 3 biến pubId, pubName, pubPhoneNumber kiểu String như đề bài.
+
+	- tạo 1 contructor với 3 tham số yêu cầu truyền vào là 3 biến trên.
+
+	- tạo các getter, setter cho các biến đó
+
+2. Tạo class PublisherManager trong package dao:
+	- tạo ArrayList<Publisher> listPubliser để lưu các Publisher.
+
+	- tạo 1 constructor ko tham số để new tụi kia, mục đích là để khi dc gọi tụi nó mới new, chứ k new ngay từ đầu gây tốn bộ nhớ 
+
+	- tạo 1 func createNewPublisher:
+		+ gọi tới thằng createPublisher trong class input để nó tạo mới thằng Publisher
+		+ sau khi tạo thì add nó vô list
+
+	- tạo 1 func deletePublisher:
+		+ đầu tiên tạo 1 hàm bên class input cho phép nhập id vô và trả ra index của pub
+		+ trả về 'not exist' nếu index == -1
+		+ trả về index của pub, sau đó xóa:
+			+ xài phương thức get(index) để lấy ra tk pub cần xóa, xong list.remove(obj)
+			+ sout ra delete obj.getName() successfully để tbáo xóa thành công
+
+	- tạo 1 func printList:
+		+ sử dụng Collections.sort của tk Comparator để sort cái list theo tên tăng dần
+		+ dùng for each để print các element trong lisht thôi
+
+3. Tạo class Input trong package utils:
+	- tạo ArrayList<Publisher> listPubliser để xíu có thể sd để đối chiếu vs listPublisher dc truyền từ class PublisherManager
+	  sang, để có thể check dulicate id,... khi validation.
+
+	- ngoài ra còn tạo thêm scanner hay notification (message),...
+
+	- tạo 1 constructor với tham số yêu cầu truyền vào là 1 cái listPublisher và 1 cái listBook để 2 thằng manager có thể 	
+	  truyền 2 cái list sang để đối chiếu khi check duplicate,...
+
+4. Tạo class Validation trong utils:
+	- vẫn tạo 2 cái arraylist vs kdl là pub và book
+
+	- tạo constructor với 2 tham số truyền vào là 2 arraylist trên để khi input gọi tới nó sẽ truyền 2 cái arraylist qua cho mà validate
+
+	- tạo func inputPubId kèm theo check regex, duplicate, empty:
+		+ làm 1 vòng do while để input và check validation	
+	
+		+ tạo func checkDuplicatePubId(String id) xài for (kdl el : list), xài el.getId.equal(id) r trả về true or false
+
+	- tạo func inputName và inputPhoneNumber
+
+5. Tạo package Database và class FileHandler trong đó:
+	* kiến thức cần biết:
+	- Trong Java, dòng (stream) – còn gọi là luồng, 
+	  là chuỗi dữ liệu được đọc (read) từ nơi được lưu trữ (data source) 
+	  và được ghi (write) tới nơi cần lưu trữ (data destination). 
+	  Input stream được sử dụng để đọc dữ liệu từ data source. 
+	  Output stream được sử dụng để ghi dữ liệu vào data destination.
+
+	----------------------------------------------------------------------
+
+	- dùng để lưu và get file của publisher và book
+
+	- tạo file bằng cách String ten_fileA = "tenfile.dat"
+
+	- tạo func save list:
+		+ sử dụng try catch
+		+ trong try, xài pthức FileOutputStream file = new FileOutputStream("ten_fileA"); 
+			để tạo file trỏ vào ten_fileA
+		+ ObjectOutputStream output = new ObjectOutputStream(file);
+			để ghi theo obj vào output stream
+		+ output.writeObject(listPublisher);
+			để ghi list theo kiểu Object vào file
+            	  file.close();
+           	  output.close();
+	
