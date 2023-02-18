@@ -13,21 +13,22 @@ public class Main {
     static Notification notification = new Notification();
     static Menu menu = new Menu();
     static PublisherManager publisherManager = new PublisherManager();
-
-    static BookManager bookManager = new BookManager();
+    static BookManager bookManager = new BookManager(publisherManager.getListPublisher());
+    //bắt dc null trong display listBook khi có pubId bị xóa
 
     public static void main(String[] args) {
         int choice = 0;
-        boolean quit = false;
+        boolean quit = false;//flag to decide when will quit
         do {
             menu.showMainMenu();
             System.out.print(Color.WHITE_BRIGHT + "Enter your choice: " +Color.RESET);
             try {
                 choice = Integer.parseInt(sc.nextLine());
+                //only choose 1 or 2, others will exit the program
             } catch (Exception e) {
-                quit = true;
+                quit = true; //catch when user input char or string
             }
-            if (!quit) {
+            if (!quit) { //quit == false
                 switch (choice) {
                     case 1:
                         controlPublisherMenu();
@@ -35,15 +36,15 @@ public class Main {
                     case 2:
                         controlBookMenu();
                         break;
-                    default:
+                    default: //if user input an integer but not 1 or 2
                         quit = true;
                         notification.showSuccessNoti("Thank you for using my application!");
                         break;
                 }
-            } else {
+            } else { //quit == true
                 notification.showSuccessNoti("Thank you for using my application!");
             }
-        } while (!quit);
+        } while (!quit); //quit when quit == true
     }
 
     public static void controlPublisherMenu() {

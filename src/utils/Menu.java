@@ -47,24 +47,24 @@ public class Menu {
     }
 
 
-    public int getChoice(int firstChoice, int lastChoice) {
-        int choice = 0;
-        boolean isInvalid = false;
-        do {
-            try {
-                System.out.print("Enter your choice from " + firstChoice + " to " + lastChoice + ": ");
-                choice = Integer.parseInt(sc.nextLine());
-                if (choice < firstChoice || choice > lastChoice) {
-                    notification.showErrorNoti("Only choose from " + firstChoice + " to " + lastChoice + "!");
-                }
-                isInvalid = false;
-            } catch (Exception e) {
-                isInvalid = true;
-                notification.showErrorNoti("Not allow string!");
-            }
-        } while (isInvalid);
-        return choice;
-    }
+//    public int getChoice(int firstChoice, int lastChoice) {
+//        int choice = 0;
+//        boolean isInvalid = false;
+//        do {
+//            try {
+//                System.out.print("Enter your choice from " + firstChoice + " to " + lastChoice + ": ");
+//                choice = Integer.parseInt(sc.nextLine());
+//                if (choice < firstChoice || choice > lastChoice) {
+//                    notification.showErrorNoti("Only choose from " + firstChoice + " to " + lastChoice + "!");
+//                }
+//                isInvalid = false;
+//            } catch (Exception e) {
+//                isInvalid = true;
+//                notification.showErrorNoti("Not allow string!");
+//            }
+//        } while (isInvalid);
+//        return choice;
+//    }
 
 
 }

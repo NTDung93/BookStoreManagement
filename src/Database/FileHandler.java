@@ -18,6 +18,7 @@ public class FileHandler {
         try {
             FileOutputStream file = new FileOutputStream(publisherFile); //tạo file trỏ vào pubFile
             ObjectOutputStream output = new ObjectOutputStream(file); //ghi theo Object vào output stream0
+//            cho phép chúng ta đọc ghi dữ liệu theo dạng object. Các byte dữ liệu thô sẽ được bao lại bên trong object và chuyển vào object stream.
             output.writeObject(listPublisher); //để ghi listPub theo dạng Object
             file.close();
             output.close();

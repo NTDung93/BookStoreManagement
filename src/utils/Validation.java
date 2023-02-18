@@ -30,13 +30,13 @@ public class Validation {
                 notification.showErrorNoti("Not allow empty!");
                 continue;
             }
-            if (!pubId.matches(regex)) {
+            if (!pubId.trim().matches(regex)) {
                 notification.showErrorNoti("Wrong id's format!");
             }
-            if (checkDuplicatePubId(pubId)) {
+            if (checkDuplicatePubId(pubId.trim())) {
                 notification.showErrorNoti("Not allow duplicate!");
             }
-        } while (pubId.isEmpty() || !pubId.matches(regex) || checkDuplicatePubId(pubId));
+        } while (pubId.isEmpty() || !pubId.trim().matches(regex) || checkDuplicatePubId(pubId.trim()));
         return pubId;
     }
 
@@ -71,10 +71,10 @@ public class Validation {
         do {
             System.out.print("Enter publisher's phone number: ");
             phoneNumber = sc.nextLine();
-            if (!phoneNumber.matches(regex)) {
+            if (!phoneNumber.trim().matches(regex)) {
                 notification.showErrorNoti("PLease enter phone number has length from 10 to 12!");
             }
-        } while (!phoneNumber.matches(regex));
+        } while (!phoneNumber.trim().matches(regex));
         return phoneNumber;
     }
 
@@ -88,13 +88,13 @@ public class Validation {
                 notification.showErrorNoti("Not allow empty!");
                 continue;
             }
-            if (!bookId.matches(regex)) {
+            if (!bookId.trim().matches(regex)) {
                 notification.showErrorNoti("Wrong id's format!");
             }
-            if (checkDuplicateBookId(bookId)) {
+            if (checkDuplicateBookId(bookId.trim())) {
                 notification.showErrorNoti("Not allow duplicate!");
             }
-        } while (bookId.isEmpty() || !bookId.matches(regex) || checkDuplicateBookId(bookId));
+        } while (bookId.isEmpty() || !bookId.trim().matches(regex) || checkDuplicateBookId(bookId.trim()));
         return bookId;
     }
 
@@ -146,11 +146,11 @@ public class Validation {
                 notification.showErrorNoti("Not allow empty!");
                 continue;
             }
-            if (!status.equalsIgnoreCase("A") && !status.equalsIgnoreCase("NA")) {
+            if (!status.trim().equalsIgnoreCase("A") && !status.trim().equalsIgnoreCase("NA")) {
                 notification.showErrorNoti("Only enter \"A\" or \"NA\"!");
             }
-        } while (status.isEmpty() || (!status.equalsIgnoreCase("A") && !status.equalsIgnoreCase("NA")));
-        if (status.equalsIgnoreCase("A")) {
+        } while (status.isEmpty() || (!status.trim().equalsIgnoreCase("A") && !status.trim().equalsIgnoreCase("NA")));
+        if (status.trim().equalsIgnoreCase("A")) {
             realStatus = "Available";
         } else {
             realStatus = "Not Available";
@@ -239,11 +239,11 @@ public class Validation {
             if (status.trim().isEmpty()) {
                 return null;
             }
-            if (!status.equalsIgnoreCase("A") && !status.equalsIgnoreCase("NA")) {
+            if (!status.trim().equalsIgnoreCase("A") && !status.trim().equalsIgnoreCase("NA")) {
                 notification.showErrorNoti("Only enter \"A\" or \"NA\"!");
             }
-        } while ((!status.equalsIgnoreCase("A") && !status.equalsIgnoreCase("NA")));
-        if (status.equalsIgnoreCase("A")) {
+        } while ((!status.trim().equalsIgnoreCase("A") && !status.trim().equalsIgnoreCase("NA")));
+        if (status.trim().equalsIgnoreCase("A")) {
             realStatus = "Available";
         } else {
             realStatus = "Not Available";
@@ -257,13 +257,13 @@ public class Validation {
         do {
             System.out.print("Enter Publisher's id with \"Pxxxxx\" format: ");
             pubId = sc.nextLine();
-            if (pubId.trim().isEmpty()) {
+            if (pubId.isEmpty()) {
                 return null;
             }
-            if (!pubId.matches(regex)) {
+            if (!pubId.trim().matches(regex)) {
                 notification.showErrorNoti("Wrong id's format!");
             }
-        } while (!pubId.matches(regex));
+        } while (!pubId.trim().matches(regex));
         return pubId;
     }
 }

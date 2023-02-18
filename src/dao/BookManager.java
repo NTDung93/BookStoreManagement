@@ -24,10 +24,13 @@ public class BookManager {
 
     Validation validation;
 
-    public BookManager() {
+    public BookManager(ArrayList<Publisher> listPublisher) {
+        //truyền listPub vào constructor để khi main new 1 cái bookManager có thể
+        //lấy dc data từ listPub trong PubManager ngay lập tức, (update tức thì ở hàm print list book)
         fileHandler = new FileHandler();
+//        listPublisher = fileHandler.getListPublisherFile();
+        this.listPublisher = listPublisher;
         listBook = fileHandler.getListBookFromFile();
-        listPublisher = fileHandler.getListPublisherFile();
         input = new Input(listPublisher, listBook);
         notification = new Notification();
         validation = new Validation(listPublisher, listBook);
@@ -54,13 +57,14 @@ public class BookManager {
             notification.showErrorNoti("Have no book here!");
         } else {
             ArrayList<Book> listFound = new ArrayList<>();
+            //tạo list book found, khi tìm thấy book thỏa yc thì add vào
             boolean notFound = true;
             String str = validation.inputString("book's name or publisher'id to search book");
 
 
             for (int i = 0; i < listBook.size(); i++) {
 //                if (listBook.get(i).getPubId().contains(str) || listBook.get(i).getBookName().toLowerCase().contains(str) || listBook.get(i).getBookName().toUpperCase().contains(str) || listBook.get(i).getBookName().contains(str)) {
-                if (listBook.get(i).getPubId().contains(str) || listBook.get(i).getBookName().toLowerCase().contains(str.toLowerCase())) {
+                if (listBook.get(i).getPubId().trim().contains(str.trim()) || listBook.get(i).getBookName().toLowerCase().trim().contains(str.toLowerCase().trim())) {
                     listFound.add(listBook.get(i));
                     notFound = false;
                 }
@@ -131,6 +135,7 @@ public class BookManager {
     }
 
     public void printListBookFromFile() {
+        //quantity giảm dần, nếu cùng quantity thì price tăng dần
         if (listBook.size() == 0) {
             notification.showErrorNoti("List is empty now!");
         } else {
@@ -139,7 +144,12 @@ public class BookManager {
                 @Override
                 public int compare(Book b1, Book b2) {
                     if (b2.getBookQuantity() == b1.getBookQuantity()) {
-                        return (int) (b1.getBookPrice() - b2.getBookPrice());
+                       float check =(b1.getBookPrice() - b2.getBookPrice());
+                       if(check>0){
+                           check++;
+                       } else if(check<0){
+                           check--;
+                       } return (int) check;
                     }
                     return b2.getBookQuantity() - b1.getBookQuantity();
                 }
@@ -154,12 +164,19 @@ public class BookManager {
         }
     }
 
+    public String getNameByID(String id){
+        for(Publisher i : listPublisher){
+            if(i.getPubId().equals(id)) return i.getPubName();
+        } return null;
+    }
+
     public void displayListBook(ArrayList<Book> listBook) {
         System.out.printf("%1s %10s %20s %20s %20s %15s %20s %20s\t\n", Color.CYAN_BOLD_BRIGHT + "No", "Id", "Name", "Price", "Quantity", "Subtotal", "Publisher's Name", "Status" + Color.RESET);
         int ordinalNumber = 1;
         for (Book book : listBook) {
             float sub = book.getBookPrice() * book.getBookQuantity();
-            System.out.printf("%1s %15s %20s %17s %15s %16s %17s %28s\t\n", Color.PURPLE_BOLD_BRIGHT + ordinalNumber++, book.getBookId(), book.getBookName(), book.getBookPrice(), book.getBookQuantity(), sub, book.getPubName(), book.getBookStatus() + Color.RESET);
+            String pubName = getNameByID(book.getPubId());
+            System.out.printf("%1s %15s %20s %17s %15s %16s %17s %28s\t\n", Color.PURPLE_BOLD_BRIGHT + ordinalNumber++, book.getBookId(), book.getBookName(), book.getBookPrice(), book.getBookQuantity(), sub, pubName, book.getBookStatus() + Color.RESET);
         }
     }
 
@@ -199,20 +216,20 @@ public class BookManager {
         //update publisher id
         String newPubId = validation.updatePubId();
         if (newPubId != null) {
-            upBoob.setPubId(newPubId);
+            upBoob.setPubId(newPubId.trim());
         } else {
             System.out.println(Color.CYAN_BRIGHT + "Keep the old value!" + Color.RESET);
         }
 
         //update publisher name according to new publisher id
-        for (Book book : listBook) {
-            if (book.getPubId().equals(newPubId)) {
-                for (Publisher publisher : listPublisher) {
-                    if (publisher.getPubId().equals(newPubId)) {
-                        book.setPubName(publisher.getPubName());
-                    }
-                }
-            }
-        }
+//        for (Book book : listBook) {
+//            if (book.getPubId().equals(newPubId)) { //lôi thằng book có pubId = với pubId đã dc update ở
+//                for (Publisher publisher : listPublisher) {//duyệt từng pub trong list pub
+//                    if (publisher.getPubId().equals(newPubId)) {//nếu pub nào có id = với cái pubId đã dc update
+//                        book.setPubName(publisher.getPubName());//thì set pubname cua book bằng với tên của pub
+//                    }
+//                }
+//            }
+//        }
     }
 }

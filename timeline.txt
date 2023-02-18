@@ -40,7 +40,7 @@
 
 	- tạo 1 func printList:
 		+ sử dụng Collections.sort của tk Comparator để sort cái list theo tên tăng dần
-		+ dùng for each để print các element trong lisht thôi
+		+ dùng for each để print các element trong lish thôi
 
 3. Tạo class Input trong package utils:
 	- tạo ArrayList<Publisher> listPubliser để xíu có thể sd để đối chiếu vs listPublisher dc truyền từ class PublisherManager

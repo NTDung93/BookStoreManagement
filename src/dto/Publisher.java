@@ -3,6 +3,8 @@ package dto;
 import java.io.Serializable;
 
 public class Publisher implements Serializable {
+    //khi chuyển đổi dl giữa các modul, dl phải dc lưu dưới dạng byte chứ k phải là dạng object
+    // Serializable sẽ chuyển object thành byte stream để có thể lưu xuống file
     String pubId, pubName, pubPhoneNumber;
 
     public Publisher(String pubId, String pubName, String pubPhoneNumber) {
@@ -34,4 +36,6 @@ public class Publisher implements Serializable {
     public void setPubPhoneNumber(String pubPhoneNumber) {
         this.pubPhoneNumber = pubPhoneNumber;
     }
+
+
 }

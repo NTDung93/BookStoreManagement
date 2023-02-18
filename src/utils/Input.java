@@ -28,19 +28,19 @@ public class Input {
     }
 
     public Publisher createPublisher() {
-        String pubId = validation.inputPubId();
-        String pubName = validation.inputName("publisher");
-        String pubPhoneNumber = validation.inputPhoneNumber();
+        String pubId = validation.inputPubId().trim();
+        String pubName = validation.inputName("publisher").trim();
+        String pubPhoneNumber = validation.inputPhoneNumber().trim();
         Publisher newPublisher = new Publisher(pubId, pubName, pubPhoneNumber);
         return newPublisher;
     }
 
     public Book createBook(){
-        String bookId = validation.inputBookId();
-        String bookName = validation.inputName("book");
+        String bookId = validation.inputBookId().trim();
+        String bookName = validation.inputName("book").trim();
         Float bookPrice = validation.inputBookPrice();
         int bookQuantity = validation.inputBookQuantity();
-        String bookStatus = validation.inputBookStatus();
+        String bookStatus = validation.inputBookStatus().trim();
         String pubId;
         String pubName = null;
         int index = inputPubIdGetIndex();
@@ -78,7 +78,7 @@ public class Input {
     public int inputPubIdGetIndex(){
         String id = validation.inputString("Publisher's id");
         for (Publisher publisher : listPublisher){
-            if (publisher.getPubId().equals(id)){
+            if (publisher.getPubId().equals(id.trim())){
                 return listPublisher.indexOf(publisher);
             }
         }
@@ -88,7 +88,7 @@ public class Input {
     public int inputBookIdGetIndex(){
         String id = validation.inputString("Book's id");
         for (Book book : listBook){
-            if (book.getBookId().equals(id)){
+            if (book.getBookId().equals(id.trim())){
                 return listBook.indexOf(book);
             }
         }
